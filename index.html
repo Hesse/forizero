@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            display: none;
+            flex-direction: column;
+            background-color: #444;
+        }
+        nav a {
+            color: #fff;
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        .hamburger {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            nav {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Website</h1>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <nav id="mobileMenu">
+            <a href="#interests">Interests</a>
+            <a href="#wip">WIP</a>
+            <a href="#music">Music</a>
+            <a href="#learn-with-me">Learn With Me</a>
+        </nav>
+    </header>
+    <main>
+        <section id="interests">
+            <h2>Interests</h2>
+            <p>Explore my interests here.</p>
+        </section>
+        <section id="wip">
+            <h2>WIP</h2>
+            <p>Check out my work in progress.</p>
+        </section>
+        <section id="music">
+            <h2>Music</h2>
+            <p>Discover my music collection.</p>
+        </section>
+        <section id="learn-with-me">
+            <h2>Learn With Me</h2>
+            <p>Join me in my learning journey.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 My Website</p>
+    </footer>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu.style.display === 'flex') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
