@@ -1,6 +1,2 @@
----
-layout: default
-title: Home
----
-
 # Home
+WTF
