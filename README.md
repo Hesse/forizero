@@ -1,2 +1,0 @@
-# forizero
-Pages
