@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H1 and UL Side by Side</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <title>for i = 0;</title>
     <style>
         * {
             font-family: 'Courier New', monospace; /* Set the font to Courier New */
+        }
+        body {
+            background-image: url('assets/IMG_7506.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
         .container {
             display: flex; /* Use flexbox to align items horizontally */
@@ -18,11 +28,12 @@
             list-style-type: none; /* Standard bullet points */
             margin: 0; /* Remove default margin */
             padding: 0; /* Remove default padding */
+            margin-top: 10px;
             display: flex; /* Optional: make list items horizontal */
             gap: 10px; /* Space between list items */
         }
 
-        li {
+        .container li {
             margin: 0; /* Adjust list item spacing */
             border: 1px solid black;
             padding: 2px;
@@ -30,6 +41,13 @@
         h1 {
             margin: 0;
             font-weight: normal;
+            /* border: 1px solid black; */
+            background-color: black;
+            color: white;
+        }
+        h2 {
+            font-weight: normal;
+            width: fit-content;
             border: 1px solid black;
         }
         li:hover {
@@ -37,23 +55,200 @@
             text-decoration-thickness: 1px;
             background-color: black;
             color: white;
-            cursor:crosshair
+            cursor: crosshair;
         }
+        #stream-wrapper {
+            /* display: flex; */
+            overflow: scroll;
+        }
+        #stream-items {
+            display: flex;
+            margin-top: 20px;
+            
+        }
+        #stream-items > li {
+            margin-right: 20px;
+        }
+        /* #stream {
+            border: 1px solid black;
+        } */
+    a {
+        text-decoration: none; /* Remove underline */
+        color: inherit; /* Inherit text color */
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 1); /* White background with slight transparency */
+        border: 1px solid black;
+        z-index: 1000; /* Ensure it appears above other content */
+        padding: 10px;
+    }
+
+    .modal-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 30px;
+        cursor: pointer;
+    }
+    
+    .message {
+        font-size: 50px;
+        /* font-weight: bold; */
+        text-align: center;
+        color: white;
+        background-color: black;
+        padding: 20px;
+        /* border-radius: 10px; */
+    }
+
     </style>
+    <script>   
+        fetch('dist/postData.json')
+            .then(response => response.json())
+            .then(data => {
+                const streamItems = document.getElementById('stream-items');
+
+                data.streams.forEach(element => {
+                    console.log(element);
+                    const div = document.createElement('div');
+                    div.style = "padding: 20px";
+                    div.innerHTML = `<p style='transform: rotate(-90deg); transform-origin: left bottom; background-color: black; color: white;'>${element}</p>`
+                    const ul = document.createElement('ul');
+                    ul.id = element;
+                    div.appendChild(ul);
+                    document.getElementById('stream-wrapper').appendChild(div);
+                })
+                data.posts.forEach(post => {
+                    const item = document.createElement('li');
+                    item.innerHTML = `<div class="post">
+                                        Date: ${post.date}
+                                        </br>
+                                        Title: ${post.title}
+                                        <br/>
+                                        Summary: ${post.summary}                                       
+                                    </div>`;
+                    item.onclick = () => {
+                        document.getElementById('modal-body').innerHTML = `
+                            <div class="post">
+                                <strong>Date:</strong> ${post.date}<br>
+                                <strong>Title:</strong> ${post.title}<br>
+                                <strong>Summary:</strong> ${post.summary}<br>
+                                <strong>Body:</strong> ${post.body}<br>
+                            </div>`;
+                        document.getElementById('modal').style.display = 'block'; // Show modal
+                    };
+                    if(post.hasOwnProperty('tags') && post.tags.length > 0){
+                        post.tags.forEach(tag => {
+                        const tagUl = document.getElementById(tag);
+                        if (tagUl) {
+                            tagUl.appendChild(item);
+                        }
+                        });
+                        
+                    } else {
+                        console.log(item);
+                        streamItems.appendChild(item);
+                    }
+                });
+                return data;
+            }).then((data) => {
+                const ran = Math.floor(Math.random() * (data.streams.length - 1));
+                document.getElementById("random").firstChild.href = `https://www.google.com/search?btnI=I'm+Feeling+Lucky&q=${data.streams[ran]}`;
+            })
+            .catch(error => console.error('Error:', error));
+
+        // Close modal functionality
+        const closeModal = () => {
+            document.getElementById('modal').style.display = 'none'; // Hide modal
+        };
+
+        // Set up event listeners after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('close-modal').onclick = closeModal;
+
+            // Close modal when clicking outside of the modal content
+            window.onclick = (event) => {
+                if (event.target === document.getElementById('modal')) {
+                    closeModal();
+                }
+            };
+
+            // Close modal when pressing the Escape key
+            window.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
+
+        // Dark mode toggle functionality
+        const toggleDarkMode = () => {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+
+            // Change styles based on dark mode
+            if (body.classList.contains('dark-mode')) {
+                body.style.backgroundColor = 'black';
+                body.style.color = 'white';
+                document.querySelectorAll('h1, h2, .modal').forEach(el => {
+                    el.style.backgroundColor = 'black';
+                    el.style.color = 'white';
+                });
+            } else {
+                body.style.backgroundColor = 'white';
+                body.style.color = 'black'; 
+                document.querySelectorAll('h1, h2, .modal').forEach(el => {
+                    el.style.backgroundColor = 'white';
+                    el.style.color = 'black';
+                });
+            }
+        };
+
+        // Set up event listener for dark mode toggle
+        document.getElementById('dark-mode-toggle').onclick = toggleDarkMode();
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>for i = 0;</h1>
-        <ul>
+        <!-- <ul>
             <li>Words</li>
             <li>WIP</li>
-            <li>Random Shit</li>
-        </ul>
+            <li id="random"><a href="https://www.google.com/search?btnI=I'm+Feeling+Lucky&q=gorf">Random</a></li>
+            <li><button id="dark-mode-toggle" style="width: 30px; height: 30px; background-color: black; color: white; border: none; cursor: pointer;" onclick="toggleDarkMode()">X</button></li>
+        </ul> -->
     </div>
-</br>
-</br>
-    <section>
-        <h1>stream:</h1>
-    </section>
+    <!-- <hr style="border-top: 2px solid black; transform: rotate(-0.5deg);" /> -->
+    <br><br>
+    <!-- <section id="streams">
+        <h2>stream:</h2>
+        <div id="stream-wrapper">
+            <ul id="stream-items"></ul>
+        </div>
+    </section> -->
+    
+    <div>
+        <p class="message">OLD McDONALD HAD A FARM, AND THEN HE HAD ANOTHER ONE, AND ANOTHER ONE, AN..</p>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="close-modal">X</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
 </body>
 </html>

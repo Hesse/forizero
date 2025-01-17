@@ -1,0 +1,25 @@
+{
+  "scripts": {
+    "forizero": "node scripts/cli.js && scripts/render.js"
+  },
+  "dependencies": {
+    "marked": "^15.0.4",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "helmet": "^4.6.0",
+    "cors": "^2.8.5",
+    "express-rate-limit": "^5.3.0",
+    "sqlite3": "^5.0.2"
+  },
+  "helmet": {
+    "contentSecurityPolicy": false,
+    "hsts": false, 
+    "crossOriginEmbedderPolicy": false,
+    "crossOriginResourcePolicy": false,
+    "dnsPrefetchControl": true,
+    "frameguard": true,
+    "hidePoweredBy": true,
+    "noSniff": true,
+    "xssFilter": true
+  }
+}
