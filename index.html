@@ -6,114 +6,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <title>for i = 0;</title>
-    <style>
-        * {
-            font-family: 'Courier New', monospace; /* Set the font to Courier New */
-        }
-        body {
-            background-image: url('assets/IMG_7506.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-        .container {
-            display: flex; /* Use flexbox to align items horizontally */
-            align-items: center; /* Align vertically centered */
-            gap: 20px; /* Add space between h1 and ul */
-        }
-
-        ul {
-            list-style-type: none; /* Standard bullet points */
-            margin: 0; /* Remove default margin */
-            padding: 0; /* Remove default padding */
-            margin-top: 10px;
-            display: flex; /* Optional: make list items horizontal */
-            gap: 10px; /* Space between list items */
-        }
-
-        .container li {
-            margin: 0; /* Adjust list item spacing */
-            border: 1px solid black;
-            padding: 2px;
-        }
-        h1 {
-            margin: 0;
-            font-weight: normal;
-            /* border: 1px solid black; */
-            background-color: black;
-            color: white;
-        }
-        h2 {
-            font-weight: normal;
-            width: fit-content;
-            border: 1px solid black;
-        }
-        li:hover {
-            text-decoration-color: black;
-            text-decoration-thickness: 1px;
-            background-color: black;
-            color: white;
-            cursor: crosshair;
-        }
-        #stream-wrapper {
-            /* display: flex; */
-            overflow: scroll;
-        }
-        #stream-items {
-            display: flex;
-            margin-top: 20px;
-            
-        }
-        #stream-items > li {
-            margin-right: 20px;
-        }
-        /* #stream {
-            border: 1px solid black;
-        } */
-    a {
-        text-decoration: none; /* Remove underline */
-        color: inherit; /* Inherit text color */
-    }
-
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 1); /* White background with slight transparency */
-        border: 1px solid black;
-        z-index: 1000; /* Ensure it appears above other content */
-        padding: 10px;
-    }
-
-    .modal-content {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-
-    .close {
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        font-size: 30px;
-        cursor: pointer;
-    }
-    
-    .message {
-        font-size: 50px;
-        /* font-weight: bold; */
-        text-align: center;
-        color: white;
-        background-color: black;
-        padding: 20px;
-        /* border-radius: 10px; */
-    }
-
-    </style>
     <script>   
         fetch('dist/postData.json')
             .then(response => response.json())
@@ -238,10 +132,14 @@
             <ul id="stream-items"></ul>
         </div>
     </section> -->
-    
+    <div id="image-layer-1"></div>
+    <div id="image-layer-2"></div>
+    <div id="image-layer-3"></div>
+    <!-- <img src="assets/IMG_7513.png" id="image-layer-1" alt="Image 1" style="width: 50%; transform: rotate(45deg); position: absolute; z-index: -1;">         -->
     <div>
+
         <p class="message">OLD McDONALD HAD A FARM, AND THEN HE HAD ANOTHER ONE, AND ANOTHER ONE, AN..</p>
-    </div>
+    </div> 
 
     <!-- Modal Structure -->
     <div id="modal" class="modal" style="display: none;">
@@ -252,3 +150,4 @@
     </div>
 </body>
 </html>
+
